@@ -14,9 +14,6 @@ export default class Layout extends React.Component {
               <li>
                 <Link to="/two">Two</Link>
               </li>
-              <li>
-                <Link to="/three">Three</Link>
-              </li>
             </ul>
           </div>
         </nav>

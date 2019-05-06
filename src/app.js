@@ -8,7 +8,6 @@ import authClient from "./oauth/Auth";
 
 import OneRoutes from "./routes/one";
 import TwoRoutes from "./routes/two";
-import ThreeRoutes from "./routes/three";
 import Callback from "./oauth/Callback";
 
 class App extends React.Component {
@@ -31,7 +30,6 @@ class App extends React.Component {
         </Switch>
         <OneRoutes />
         <TwoRoutes />
-        <ThreeRoutes />
         <Switch>
           <Route exact path="/callback" component={Callback} />
         </Switch>
