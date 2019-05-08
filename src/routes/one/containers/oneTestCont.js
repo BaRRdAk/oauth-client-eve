@@ -9,7 +9,7 @@ class OneTestCont extends React.Component {
     console.log(this.props);
 
     return (
-      <div>
+      <div className="container">
         <ComponentOne data={this.props.localState.one.test} />
         <button onClick={this.props.simpleAction}>Next</button>
       </div>
