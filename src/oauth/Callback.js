@@ -4,7 +4,7 @@ import authClient from './Auth';
 
 class Callback extends Component {
   async componentDidMount() {
-    await authClient.handleAuthentication();
+    await authClient.handleAuthorizationCode();
     this.props.history.replace('/');
   }
 
