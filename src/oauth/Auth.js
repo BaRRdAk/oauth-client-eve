@@ -39,9 +39,9 @@ class Auth {
 
     isAuthenticated() {
 
-        console.log(sessionStorage.getItem('expires'))
+        console.log(sessionStorage.getItem('expires_in'))
 
-        if(sessionStorage.getItem('expires') !== null || new Date().getTime() < Number(sessionStorage.getItem('expires')))
+        if(sessionStorage.getItem('expires_in') !== null || new Date().getTime() < Number(sessionStorage.getItem('expires_in')))
             return true;
         else
             return false;
