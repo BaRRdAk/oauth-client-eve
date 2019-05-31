@@ -99,7 +99,6 @@ class Auth {
 
     signOut() {
         sessionStorage.removeItem('access_token');
-        sessionStorage.removeItem('refresh_token');
         sessionStorage.removeItem('token_type');
         sessionStorage.removeItem('expires_in');
         sessionStorage.removeItem('CharacterName');
