@@ -1,31 +1,32 @@
 import rp from 'request-promise'
 import queryString from 'query-string'
-import API_BASE_URL from '../constants'
-import CALLBACK_URL from '../constants'
-import AUTHORIZATION_URL from '../constants'
-import TOKEN_URL from '../constants'
-import CLIENT_ID from '../constants'
-import CLIENT_SECRET from '../constants'
+import {CALLBACK_URL, AUTHORIZATION_URL, VERIFY_URL, TOKEN_URL, CLIENT_ID, CLIENT_SECRET} from '../constants'
 
 class Auth {
 
-    getProfile() {
+    refreshToken() {
 
         var options = {
             method: 'POST',
-            uri: "http://192.168.245.153:8081/oauth/check_token",
+            uri: TOKEN_URL,
             qs: {
-                token: sessionStorage.getItem('access_token')
+                grant_type: 'refresh_token',
+                refresh_token: sessionStorage.getItem('refresh_token')
             },
             headers: {
-                'Authorization': 'Basic ' + btoa('my-trusted-client:secret')
+                'Authorization': 'Basic ' + btoa(CLIENT_ID + ':' + CLIENT_SECRET),
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'Host': 'login.eveonline.com'
             },
             json: true
         };
 
         rp(options)
             .then(function (parsedBody) {
-                return parsedBody
+                sessionStorage.setItem('access_token', parsedBody['access_token'])
+                sessionStorage.setItem('refresh_token', parsedBody['refresh_token'])
+                sessionStorage.setItem('token_type', parsedBody['token_type'])
+                sessionStorage.setItem('expires_in', Date.now() + parsedBody['expires_in'] * 1000)
             })
             .catch(function (err) {
                 return err
@@ -39,7 +40,7 @@ class Auth {
 
     isAuthenticated() {
 
-        console.log(sessionStorage.getItem('expires_in'))
+        console.log(Date.now(), sessionStorage.getItem('expires_in'))
 
         if(sessionStorage.getItem('expires_in') !== null || new Date().getTime() < Number(sessionStorage.getItem('expires_in')))
             return true;
@@ -51,36 +52,32 @@ class Auth {
     handleAuthorizationCode() {
         return new Promise((resolve, reject) => {
             const parsed = queryString.parse(window.location.hash.substring(1));
-            if (parsed['code']) {
+            if (parsed['access_token']) {
+                console.log(parsed)
+                sessionStorage.setItem('access_token', parsed['access_token'])
+                sessionStorage.setItem('token_type', parsed['token_type'])
+                sessionStorage.setItem('expires_in', Date.now() + parsed['expires_in'] * 1000)
+
                 var options = {
-                    method: 'POST',
-                    uri: TOKEN_URL,
+                    method: 'GET',
+                    uri: VERIFY_URL,
                     qs: {
-                        grant_type: 'authorization_code',
-                        code: parsed['code']
-                    },
-                    headers: {
-                        'Authorization': 'Basic ' + btoa(CLIENT_ID + ':' + CLIENT_SECRET),
-                        'Content-Type': 'application/json',
-                        'Host': 'login.eveonline.com'
+                        datasource: 'tranquility',
+                        token: parsed['access_token']
                     },
                     json: true
                 };
         
                 rp(options)
                     .then(function (parsedBody) {
-                        if (parsedBody['access_token']) {
-                            sessionStorage.setItem('access_token', parsedBody['access_token'])
-                            sessionStorage.setItem('refresh_token', parsedBody['access_token'])
-                            sessionStorage.setItem('token_type', parsedBody['token_type'])
-                            sessionStorage.setItem('expires_in', Date.now() + parsedBody['expires_in'] * 1000)
-                        }
-                        resolve();
+                        sessionStorage.setItem('CharacterID', parsedBody['CharacterID'])
+                        sessionStorage.setItem('CharacterName', parsedBody['CharacterName'])
+                        resolve()
                     })
                     .catch(function (err) {
-                        reject();
-                    });
-            }       
+                        reject()
+                    })
+            }
         })
     }
 
@@ -95,15 +92,19 @@ class Auth {
             "esi-planets.manage_planets.v1"
         ]
 
-        let authorize_url = AUTHORIZATION_URL + "?response_type=code&redirect_uri=" + CALLBACK_URL + "&client_id=" + CLIENT_ID + "&scope=" + scopes.join("%20");
+        let authorize_url = AUTHORIZATION_URL + "?response_type=token&redirect_uri=" + CALLBACK_URL + "&client_id=" + CLIENT_ID + "&scope=" + scopes.join("%20");
         document.location.href = authorize_url;
 
     }
 
     signOut() {
         sessionStorage.removeItem('access_token');
+        sessionStorage.removeItem('refresh_token');
         sessionStorage.removeItem('token_type');
-        sessionStorage.removeItem('expires');
+        sessionStorage.removeItem('expires_in');
+        sessionStorage.removeItem('CharacterName');
+        sessionStorage.removeItem('CharacterID');
+        document.location.href = '/'
     }
 }
 
