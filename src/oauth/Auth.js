@@ -42,11 +42,15 @@ class Auth {
 
         console.log(Date.now(), sessionStorage.getItem('expires_in'))
 
-        if(sessionStorage.getItem('expires_in') !== null || new Date().getTime() < Number(sessionStorage.getItem('expires_in')))
+        if(sessionStorage.getItem('expires_in') !== null && new Date().getTime() < Number(sessionStorage.getItem('expires_in'))){
             return true;
-        else
+        } else if(sessionStorage.getItem('expires_in') !== null && new Date().getTime() > Number(sessionStorage.getItem('expires_in'))){
+            sessionStorage.clear();
+            document.location.href = '/';
+        } else {
             return false;
-
+        }
+            
     }
 
     handleAuthorizationCode() {
@@ -98,13 +102,11 @@ class Auth {
     }
 
     signOut() {
-        sessionStorage.removeItem('access_token');
-        sessionStorage.removeItem('token_type');
-        sessionStorage.removeItem('expires_in');
-        sessionStorage.removeItem('CharacterName');
-        sessionStorage.removeItem('CharacterID');
-        document.location.href = '/'
+        sessionStorage.clear();
+        document.location.href = '/';
     }
+
+
 }
 
 const authClient = new Auth();
