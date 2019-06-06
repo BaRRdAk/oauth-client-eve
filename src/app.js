@@ -4,6 +4,8 @@ import { Switch, Route, withRouter } from "react-router-dom";
 import Layout from "./components/common/Layout";
 import Dashboard from "./routes/dashboard/containers/Dashboard";
 
+import Skill from "./routes/skill";
+
 import OneRoutes from "./routes/one";
 import TwoRoutes from "./routes/two";
 import Callback from "./oauth/Callback";
@@ -17,6 +19,7 @@ class App extends React.Component {
         <Switch>
           <Route exact path="/" component={Dashboard} />
         </Switch>
+        <Skill />
         <OneRoutes />
         <TwoRoutes />
         <Switch>

@@ -93,7 +93,8 @@ class Auth {
             "esi-industry.read_character_jobs.v1", 
             "esi-characters.read_blueprints.v1", 
             "esi-markets.read_character_orders.v1", 
-            "esi-planets.manage_planets.v1"
+            "esi-planets.manage_planets.v1",
+            "esi-skills.read_skills.v1"
         ]
 
         let authorize_url = AUTHORIZATION_URL + "?response_type=token&redirect_uri=" + CALLBACK_URL + "&client_id=" + CLIENT_ID + "&scope=" + scopes.join("%20");
