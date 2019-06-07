@@ -7,9 +7,13 @@ class CharacterSkills extends React.Component {
 
     componentDidMount() {
 
+        this.props.loadSkills();
 
     }
 
+    componentWillMount(){
+        console.log(this.props.localState)
+    }
 
     render() {
         return (
@@ -25,9 +29,9 @@ export default connect(
     state => ({
       localState: state
     }),
-    dispatch => (
-
-        getSkills()
-
-    )
+    dispatch => ({
+      loadSkills: () => {
+        dispatch(getSkills());
+      }
+    })
   )(CharacterSkills);
