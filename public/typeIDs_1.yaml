@@ -40,12 +40,12 @@
 12368: {iconID: 33, groupID: 272, name: Пилотирование в сверхевклидовом пространстве, marketGroupID: null}
 52307: {iconID: 33, groupID: 270, name: Triglavian Quantum Engineering, marketGroupID: 375}
 52308: {iconID: 33, groupID: 270, name: Triglavian Encryption Methods, marketGroupID: 375}
-12376: {iconID: 33, groupID: 267, name: '''Logic''', marketGroupID: null}
+12376: {iconID: 33, groupID: 267, name: 'Logic', marketGroupID: null}
 32856: {iconID: 33, groupID: 255, name: Применение тактических боеприпасов, marketGroupID: null}
-12383: {iconID: 33, groupID: 267, name: '''Presence''', marketGroupID: null}
-12385: {iconID: 33, groupID: 267, name: '''Eidetic Memory''', marketGroupID: null}
-12386: {iconID: 33, groupID: 267, name: '''Focus''', marketGroupID: null}
-12387: {iconID: 33, groupID: 267, name: '''Clarity''', marketGroupID: null}
+12383: {iconID: 33, groupID: 267, name: 'Presence', marketGroupID: null}
+12385: {iconID: 33, groupID: 267, name: 'Eidetic Memory', marketGroupID: null}
+12386: {iconID: 33, groupID: 267, name: 'Focus', marketGroupID: null}
+12387: {iconID: 33, groupID: 267, name: 'Clarity', marketGroupID: null}
 21603: {iconID: 33, groupID: 275, name: Теория приводного поля, marketGroupID: 374}
 21610: {iconID: 33, groupID: 275, name: Топливоснабжение гипердвигателей, marketGroupID: 374}
 21611: {iconID: 33, groupID: 275, name: Калибровка гипердвигателей, marketGroupID: 374}

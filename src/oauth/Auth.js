@@ -1,6 +1,6 @@
 import rp from 'request-promise'
 import queryString from 'query-string'
-import {CALLBACK_URL, AUTHORIZATION_URL, VERIFY_URL, TOKEN_URL, CLIENT_ID, CLIENT_SECRET} from '../constants'
+import {CALLBACK_URL, AUTHORIZATION_URL, VERIFY_URL, TOKEN_URL, CLIENT_ID, CLIENT_SECRET, REVOKE_TOKEN_URL} from '../constants'
 
 class Auth {
 
@@ -103,10 +103,30 @@ class Auth {
     }
 
     signOut() {
-        sessionStorage.clear();
-        document.location.href = '/';
-    }
 
+        var options = {
+            method: 'POST',
+            uri: REVOKE_TOKEN_URL,
+            qs: {
+                token: sessionStorage.getItem('access_token')
+            },
+            headers: {
+                'Authorization': 'Basic ' + btoa(CLIENT_ID + ':' + CLIENT_SECRET),
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'Host': 'login.eveonline.com'
+            },
+        };
+
+        rp(options)
+            .then(function () {
+                sessionStorage.clear();
+                document.location.href = '/';
+            })
+            .catch(function (err) {
+                return err
+            });
+
+    }
 
 }
 
