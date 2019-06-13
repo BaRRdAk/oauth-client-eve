@@ -1,6 +1,6 @@
 import rp from 'request-promise'
 import queryString from 'query-string'
-import {CALLBACK_URL, AUTHORIZATION_URL, VERIFY_URL, TOKEN_URL, CLIENT_ID, CLIENT_SECRET, REVOKE_TOKEN_URL} from '../constants'
+import {CALLBACK_URL, AUTHORIZATION_URL, VERIFY_URL, TOKEN_URL, CLIENT_ID, CLIENT_SECRET} from '../constants'
 
 class Auth {
 
@@ -40,7 +40,7 @@ class Auth {
 
     isAuthenticated() {
 
-        console.log(Date.now(), sessionStorage.getItem('expires_in'))
+        //console.log(Date.now(), sessionStorage.getItem('expires_in'))
 
         if(sessionStorage.getItem('expires_in') !== null && new Date().getTime() < Number(sessionStorage.getItem('expires_in'))){
             return true;
@@ -104,27 +104,30 @@ class Auth {
 
     signOut() {
 
-        var options = {
-            method: 'POST',
-            uri: REVOKE_TOKEN_URL,
-            qs: {
-                token: sessionStorage.getItem('access_token')
-            },
-            headers: {
-                'Authorization': 'Basic ' + btoa(CLIENT_ID + ':' + CLIENT_SECRET),
-                'Content-Type': 'application/x-www-form-urlencoded',
-                'Host': 'login.eveonline.com'
-            },
-        };
+        // var options = {
+        //     method: 'POST',
+        //     uri: REVOKE_TOKEN_URL,
+        //     qs: {
+        //         token: sessionStorage.getItem('access_token')
+        //     },
+        //     headers: {
+        //         'Authorization': 'Basic ' + btoa(CLIENT_ID + ':' + CLIENT_SECRET),
+        //         'Content-Type': 'application/x-www-form-urlencoded',
+        //         'Host': 'login.eveonline.com'
+        //     },
+        // };
 
-        rp(options)
-            .then(function () {
-                sessionStorage.clear();
-                document.location.href = '/';
-            })
-            .catch(function (err) {
-                return err
-            });
+        // rp(options)
+        //     .then(function () {
+        //         sessionStorage.clear();
+        //         document.location.href = '/';
+        //     })
+        //     .catch(function (err) {
+        //         return err
+        //     });
+
+            sessionStorage.clear();
+            document.location.href = '/';
 
     }
 

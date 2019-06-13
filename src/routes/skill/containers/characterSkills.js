@@ -11,16 +11,15 @@ class CharacterSkills extends React.Component {
 
     }
 
-    componentWillMount(){
-        console.log(this.props.localState)
-    }
-
     render() {
-        return (
-            <div className="container">
-                <SkillsList data="1" />
-            </div>
-        )
+      console.log(this.props.localState)
+      return (
+          <div className="container">
+            <div>Total SP: {this.props.localState.skill.total_sp}</div>
+            <div>Unallocated SP: {this.props.localState.skill.unallocated_sp}</div>
+            <SkillsList data={this.props.localState.skill.skills} />
+          </div>
+      )
 
     }
 }

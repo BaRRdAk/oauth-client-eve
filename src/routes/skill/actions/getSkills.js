@@ -1,9 +1,8 @@
 import {API_BASE_URL} from '../../../constants'
 import rp from 'request-promise'
 
-export const getSkills = () => dispatch => {
 
-    console.log(55555)
+export const getSkills = () => dispatch => {
 
     var characterId = sessionStorage.getItem('CharacterID')
 
@@ -23,11 +22,7 @@ export const getSkills = () => dispatch => {
 
     rp(options)
         .then(function (parsedBody) {
-            console.log(parsedBody)
-            dispatch({
-                type: 'SKILL_IMPORT',
-                payload: parsedBody
-            })
+            dispatch({ type: 'SKILL_IMPORT', payload: parsedBody })
         })
         .catch(function (err) {
 
